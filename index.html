@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+	<script type="text/javascript">
+		var socketio = io.connect('http://127.0.0.1:8000');
+		socketio.on('message_to_client', function(data){
+			document.write(data.message);
+		})
+
+		function sendMessage(){
+			var usermessage = document.getElementById('message').value;
+			socketio.emit('message_to_server', {
+				message: usermessage
+			});
+			event.preventDefault();
+		}
+	</script>
+</head>
+<body>
+	<h1>This is the index page!</h1>
+	<div id="chat-window">
+		<form onsubmit="sendMessage()">
+			<input type="text" id="message" placeholder="type your message here">
+			<input type="submit">
+		</form>
+	</div>
+
+</body>
+</html>
